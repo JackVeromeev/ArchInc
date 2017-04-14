@@ -5,20 +5,34 @@ import com.netcracker.veromeev.archinc.entity.User;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class UserDAO extends AbstractDAO<User> {
 
-    UserDAO(Connection connection, String tableName) {
-        super(connection, tableName);
-    }
+    private static final String TABLE_NAME = "User";
 
-    @Override
-    public ArrayList<User> readAll() throws DAOException {
-        return null;
+    public UserDAO(Connection connection) {
+        super(connection, TABLE_NAME);
     }
 
     @Override
     public User read(int id) throws DAOException {
         return null;
+    }
+
+    @Override
+    public List<User> readAll() throws DAOException {
+        return null;
+    }
+
+    @Override
+    public void insert(User val) throws DAOException {
+
+    }
+
+    @Override
+    public void update(int id, User val) throws DAOException {
+
     }
 }

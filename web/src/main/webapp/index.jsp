@@ -4,39 +4,22 @@
 <%@ page
         import="com.netcracker.veromeev.archinc.dbmanager.exception.DBManagerException" %>
 <%@ page import="java.sql.SQLException" %>
+<%@ page import="com.netcracker.veromeev.archinc.dao.AbstractDAO" %>
+<%@ page import="com.netcracker.veromeev.archinc.dao.UserDAO" %>
+<%@ page import="com.netcracker.veromeev.archinc.dao.exception.DAOException" %>
 <html>
 <body>
 <h2>Hello World!</h2>
 <%
-    String s = "";
+    String s;
     try (
             Connection connection = DBManager.getInstance().getConnection();
-            PreparedStatement preparedStatement =
-            connection.prepareStatement(
-                "INSERT INTO Usertype (id_Usertype, Type) VALUES" +
-                "(?, ?)")
     ){
-        connection.setAutoCommit(false);
-        s += "<p>";
-        preparedStatement.setInt(1, 1);
-        preparedStatement.setString(2, "HR");
-        preparedStatement.execute();
-        s += "HR kekekek</p>";
-        connection.commit();
-//        s += "<p>";
-//        preparedStatement.setString(1, "CUSTOMER");
-//        preparedStatement.execute();
-//        s += "</p>";
-//        s += "<p>";
-//        preparedStatement.setString(1, "MANAGER");
-//        preparedStatement.execute();
-//        s += "</p>";
-//        s += "<p>";
-//        preparedStatement.setString(1, "ADMIN");
-//        preparedStatement.execute();
-//        s += "</p>";
-    } catch (DBManagerException | SQLException e) {
-        s += "<p>" + e.toString() + "</p>";
+        UserDAO dao = new UserDAO(connection);
+        dao.delete(2);
+        s = "sukes";
+    } catch (DBManagerException | DAOException e) {
+        s = e.getMessage() + "</p><p>caused by: " + e.getCause();
     }
 %>
 <p><%= s %></p>

@@ -10,10 +10,10 @@ public class User extends AbstractEntity {
     private String password;
     private UserType userType;
 
-    public User(Integer id, String userName, String password) {
+    public User(int id, String userName, String password) {
         super(id);
-        this.setUserName(userName);
-        this.setPassword(password);
+        this.userName = userName;
+        this.password = password;
     }
 
     public String getUserName() {
@@ -36,10 +36,4 @@ public class User extends AbstractEntity {
         setPassword(SHA512Encryption.encrypt(openPassword));
     }
 
-    @Override
-    public String toSQLSet() {
-        StringBuilder builder = new StringBuilder();
-
-        return builder.toString();
-    }
 }

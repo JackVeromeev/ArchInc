@@ -1,85 +1,64 @@
 package com.netcracker.veromeev.archinc.dao;
 
 import com.netcracker.veromeev.archinc.dao.exception.DAOException;
+import com.netcracker.veromeev.archinc.dao.util.StatementFiller;
 import com.netcracker.veromeev.archinc.entity.AbstractEntity;
+import com.sun.istack.internal.Nullable;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractDAO<Type extends AbstractEntity> {
 
     private Connection connection;
+
     protected String tableName;
 
-    protected String UPDATE_QUERY_HEAD;
-    protected String UPDATE_QUERY_TAIL;
-    protected String DELETE_QUERY;
-    protected String INSERT_QUERY;
+    protected String deleteQuery;
+    protected String deleteExceptionMessage;
 
 
     AbstractDAO(Connection connection, String tableName) {
-        this.setConnection(connection);
-        this.tableName = tableName;
-        initQueryStrings();
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void setConnection(Connection connection) {
         this.connection = connection;
-    }
-
-    private void initQueryStrings() {
-        UPDATE_QUERY_HEAD = "UPDATE " + tableName + " SET ";
-        UPDATE_QUERY_TAIL = " WHERE id_" + tableName + " = ?";
-        DELETE_QUERY =
+        this.tableName = tableName;
+        deleteQuery =
                 "DELETE FROM " + tableName + " WHERE " +
-                "id_" + tableName + " = ?";
-        INSERT_QUERY = "INSERT INTO " + tableName + " SET";
-    }
-
-
-    public abstract ArrayList<Type> readAll() throws DAOException;
-
-    public void insert(Type val) throws DAOException {
-        String insertQuery = INSERT_QUERY + val.toSQLSet();
-        try (PreparedStatement statement =
-                     getConnection().prepareStatement(insertQuery)) {
-            statement.execute();
-        } catch (SQLException ex) {
-            throw new DAOException(
-                    "Can't insert into " + tableName, ex);
-        }
+                        "id_" + tableName + " = ?";
+        deleteExceptionMessage = "Can't delete from " + tableName +
+                " whth id = ";
     }
 
     public abstract Type read(int id) throws DAOException;
+    public abstract List<Type> readAll() throws DAOException;
+    public abstract void insert(Type val) throws DAOException;
+    public abstract void update(int id, Type val) throws DAOException;
 
-    public void update(int id, Type val) throws DAOException {
-        String updateQuery = UPDATE_QUERY_HEAD + val.toSQLSet() +
-                UPDATE_QUERY_TAIL;
-        try (PreparedStatement statement =
-                     getConnection().prepareStatement(updateQuery)) {
-            statement.execute();
-        } catch (SQLException ex) {
-            throw new DAOException(
-                    "Can't update " + tableName + " by id = " + id, ex);
-        }
-    }
-
+    /**
+     * Delete from the table by id.
+     * @param id id of deleted touple
+     * @throws DAOException if exception
+     */
     public void delete(int id) throws DAOException {
-        try (PreparedStatement statement =
-                     getConnection().prepareStatement(DELETE_QUERY)) {
-            statement.setInt(1, id);
-            statement.execute();
-        } catch (SQLException ex) {
-            throw new DAOException(
-                    "Can't delete " + tableName + " by id = " + id, ex);
-        }
+        executeQuery(deleteQuery, deleteExceptionMessage + id,
+                statement -> {
+                    statement.setInt(1, id);
+                    return null;
+        });
     }
 
-
+    protected List<Type> executeQuery(String query, String exceptionMessage,
+                                StatementFiller filler)
+            throws DAOException {
+        List<Type> resultList = null;
+        try (PreparedStatement statement =
+                     connection.prepareStatement(query)) {
+            resultList = filler.fill(statement);
+            statement.execute();
+        } catch (SQLException ex) {
+            throw new DAOException(exceptionMessage, ex);
+        }
+        return resultList;
+    }
 }

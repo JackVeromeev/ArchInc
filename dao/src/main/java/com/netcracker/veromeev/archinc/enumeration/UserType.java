@@ -8,6 +8,7 @@ public enum UserType {
 
     private static final String INIT_QUERY =
             "SELECT (id_Usertype, Type) FROM Usertype;";
+
     private int id;
 
     public int getId() {
