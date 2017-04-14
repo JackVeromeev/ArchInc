@@ -1,10 +1,10 @@
 package com.netcracker.veromeev.archinc.entity;
 
-public abstract class AbstractEntity {
+public abstract class Entity {
 
-    protected int id;
+    private int id;
 
-    public AbstractEntity(int id) {
+    Entity(int id) {
         this.id = id;
     }
 

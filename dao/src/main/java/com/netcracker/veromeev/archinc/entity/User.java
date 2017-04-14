@@ -4,24 +4,25 @@ package com.netcracker.veromeev.archinc.entity;
 import com.netcracker.veromeev.archinc.enumeration.UserType;
 import com.netcracker.veromeev.archinc.util.encryption.SHA512Encryption;
 
-public class User extends AbstractEntity {
+public class User extends Entity {
 
-    private String userName;
+    private String name;
     private String password;
     private UserType userType;
 
-    public User(int id, String userName, String password) {
+    public User(int id, UserType userType, String name, String password) {
         super(id);
-        this.userName = userName;
+        this.name = name;
         this.password = password;
+        this.setUserType(userType);
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -33,7 +34,14 @@ public class User extends AbstractEntity {
     }
 
     public void encryptAndSetPassword(String openPassword) {
-        setPassword(SHA512Encryption.encrypt(openPassword));
+        this.password = SHA512Encryption.encrypt(openPassword);
     }
 
+    public UserType getUserType() {
+        return userType;
+    }
+
+    public void setUserType(UserType userType) {
+        this.userType = userType;
+    }
 }
