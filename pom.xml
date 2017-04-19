@@ -7,6 +7,7 @@
     <modules>
         <module>web</module>
       <module>dao</module>
+        <module>service</module>
     </modules>
     <packaging>pom</packaging>
   <name>archinc</name>
