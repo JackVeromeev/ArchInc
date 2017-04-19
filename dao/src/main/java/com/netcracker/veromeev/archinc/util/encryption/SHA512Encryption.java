@@ -30,5 +30,4 @@ public class SHA512Encryption {
         }
         return generatedPassword;
     }
-
 }

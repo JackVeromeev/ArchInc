@@ -38,7 +38,7 @@ public class DBManager {
     }
 
     public Connection getConnection() throws DBManagerException {
-        Connection connection = null;
+        Connection connection;
         try {
             connection = dataSource.getConnection();
         } catch (SQLException ex) {

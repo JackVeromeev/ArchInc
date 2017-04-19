@@ -17,4 +17,12 @@ public enum Gender {
                     + "\" is not legal for gender (Are you transgender?)");
         }
     }
+
+    public String toSQLString() {
+        switch (this) {
+            case FEMALE: return "F";
+            case MALE: return "M";
+        }
+        return "";
+    }
 }

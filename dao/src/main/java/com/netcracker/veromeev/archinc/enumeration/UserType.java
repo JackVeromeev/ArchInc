@@ -8,9 +8,6 @@ public enum UserType {
     MANAGER,
     HUMAN_RESOURCER;
 
-    private static final String INIT_QUERY =
-            "SELECT (id_Usertype, Type) FROM Usertype;";
-
     private int id;
 
     public int getId() {

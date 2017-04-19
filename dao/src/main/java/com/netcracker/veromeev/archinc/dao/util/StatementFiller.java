@@ -6,8 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * fills PreparedStatement(" ... %fildName% = ?, ...")
- * with concreate values. Used in AbstractDAO.execute
+ * fills PreparedStatement(" ... %fieldName% = ?, ...")
+ * with concrete values. Used in AbstractDAO.execute
  */
 public interface StatementFiller<Type extends Entity> {
     void fill(PreparedStatement statement) throws SQLException;
