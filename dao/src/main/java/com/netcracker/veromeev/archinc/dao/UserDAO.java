@@ -81,6 +81,7 @@ public class UserDAO extends AbstractDAO<User> {
                     statement.setString(1, login);
                     statement.setString(2, password);
         });
+
         return resultList.get(0);
     }
 

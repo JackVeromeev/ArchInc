@@ -6,7 +6,7 @@ public enum UserType {
     ADMIN,
     CUSTOMER,
     MANAGER,
-    HUMAN_RESOURCER;
+    HUMAN_RESOURCE;
 
     private int id;
 
@@ -29,8 +29,8 @@ public enum UserType {
         if (id == MANAGER.getId()) {
             return MANAGER;
         }
-        if (id == HUMAN_RESOURCER.getId()) {
-            return HUMAN_RESOURCER;
+        if (id == HUMAN_RESOURCE.getId()) {
+            return HUMAN_RESOURCE;
         }
         return null;
     }
