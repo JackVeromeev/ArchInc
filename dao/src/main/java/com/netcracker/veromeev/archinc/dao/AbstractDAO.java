@@ -1,6 +1,5 @@
 package com.netcracker.veromeev.archinc.dao;
 
-import com.netcracker.veromeev.archinc.dao.exception.DAOException;
 import com.netcracker.veromeev.archinc.dao.util.StatementFiller;
 import com.netcracker.veromeev.archinc.entity.Entity;
 import com.netcracker.veromeev.archinc.entity.factory.EntityFactory;

@@ -1,6 +1,5 @@
 package com.netcracker.veromeev.archinc.dao;
 
-import com.netcracker.veromeev.archinc.dao.exception.DAOException;
 import com.netcracker.veromeev.archinc.entity.Region;
 
 import java.sql.Connection;

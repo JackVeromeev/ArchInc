@@ -1,11 +1,12 @@
 package com.netcracker.veromeev.archinc.service;
 
+import com.netcracker.veromeev.archinc.dao.UserDAO;
 import com.netcracker.veromeev.archinc.entity.User;
-import com.netcracker.veromeev.archinc.transaction.ReadingTransactionHandler;
-import com.netcracker.veromeev.archinc.transaction.TransactionException;
+import com.netcracker.veromeev.archinc.enumeration.UserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -13,15 +14,13 @@ import java.util.List;
  *
  * @author Jack Veromeyev
  */
-public class AdminService {
+public class AdminService extends AbstractService {
 
-    private static Logger logger = LoggerFactory.getLogger(AdminService.class);
+    private static final Logger logger = LoggerFactory.getLogger(AdminService.class);
 
     private static AdminService instance = null;
 
-    private AdminService() {
-
-    }
+    private AdminService() {}
 
     public static synchronized AdminService getInstance() {
         if (instance == null) {
@@ -30,5 +29,18 @@ public class AdminService {
         return instance;
     }
 
+    public List<User> getUsers() throws ServiceException {
+        List<User> users = new LinkedList<>();
+        runReadingTransaction("getUsers()", connection -> {
+            List<User> userList = UserDAO.getInstance().readAll(connection);
+            userList.forEach(user -> users.add(user));
+        });
+        return users;
+    }
 
+    public void editUser(User user) throws ServiceException {
+        runAtomicTransaction("editUser(" + user.getLogin() + ")",
+                connection -> UserDAO.getInstance().update(user, connection)
+        );
+    }
 }

@@ -1,18 +1,18 @@
-package com.netcracker.veromeev.archinc.dao.exception;
+package com.netcracker.veromeev.archinc.dao;
 
 public class DAOException extends Exception {
 
-    public DAOException(String message, Throwable exception) {
+    DAOException(String message, Throwable exception) {
         super(message, exception);
     }
 
-    public DAOException(String message) {
+    DAOException(String message) {
         super(message);
     }
 
     @Override
     public String toString() {
-        return  "DBManagerException: "
+        return  "DAO Exception: "
                 + super.getMessage() + '\n' + super.getCause();
     }
 

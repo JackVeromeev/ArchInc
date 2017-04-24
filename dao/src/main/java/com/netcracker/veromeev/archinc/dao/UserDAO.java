@@ -1,7 +1,7 @@
 package com.netcracker.veromeev.archinc.dao;
 
-import com.netcracker.veromeev.archinc.dao.exception.DAOException;
 import com.netcracker.veromeev.archinc.entity.User;
+import com.netcracker.veromeev.archinc.util.encryption.SHA512Encryption;
 
 import java.sql.Connection;
 import java.util.LinkedList;
@@ -81,8 +81,11 @@ public class UserDAO extends AbstractDAO<User> {
                     statement.setString(1, login);
                     statement.setString(2, password);
         });
-
-        return resultList.get(0);
+        if (resultList.size() == 0) {
+            throw new DAOException(SELECT_BY_LOGIN_PASS_EXCEPTION_MESSAGE);
+        } else {
+            return resultList.get(0);
+        }
     }
 
     @Override
@@ -91,12 +94,8 @@ public class UserDAO extends AbstractDAO<User> {
         executeReadQuery(connection, SELECT_ALL_USERS_QUERY,
                 SELECT_ALL_USERS_EXCEPTION_MESSAGE,
                 resultList, User.class,
-                statement -> {});
-        try {
-            Thread.sleep(40000);
-        } catch (InterruptedException e) {
-            throw new DAOException("Can't wait 1000 ms", e);
-        }
+                statement -> {}
+        );
         return resultList;
     }
 

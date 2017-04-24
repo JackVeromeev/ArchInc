@@ -1,8 +1,6 @@
 package com.netcracker.veromeev.archinc.dbmanager;
 
 
-import com.netcracker.veromeev.archinc.dbmanager.exception.DBManagerException;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;

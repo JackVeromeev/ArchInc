@@ -1,4 +1,4 @@
-package com.netcracker.veromeev.archinc.dbmanager.exception;
+package com.netcracker.veromeev.archinc.dbmanager;
 
 /**
  * Created by jack on 12/04/17.
@@ -7,11 +7,11 @@ package com.netcracker.veromeev.archinc.dbmanager.exception;
  */
 public class DBManagerException extends Exception {
 
-    public DBManagerException(String message, Throwable exception) {
+    DBManagerException(String message, Throwable exception) {
         super(message, exception);
     }
 
-    public DBManagerException(String message) {
+    DBManagerException(String message) {
         super(message);
     }
 

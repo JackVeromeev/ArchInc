@@ -6,5 +6,10 @@ package com.netcracker.veromeev.archinc.transaction;
  * @author Jack Veromeyev
  */
 public interface TransactionHandler {
-    void run(Transaction transaction) throws TransactionException;
+    void runAtomicTransaction(String exceptionMessage,
+                              Transaction transaction)
+            throws TransactionException;
+    void runReadingTransaction(String exceptionMessage,
+                               Transaction transaction)
+            throws TransactionException;
 }

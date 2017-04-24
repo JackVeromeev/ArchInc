@@ -6,7 +6,8 @@ public enum UserType {
     ADMIN,
     CUSTOMER,
     MANAGER,
-    HUMAN_RESOURCE;
+    HUMAN_RESOURCE,
+    NOT_AUTHORIZED;
 
     private int id;
 
@@ -32,6 +33,6 @@ public enum UserType {
         if (id == HUMAN_RESOURCE.getId()) {
             return HUMAN_RESOURCE;
         }
-        return null;
+        return NOT_AUTHORIZED;
     }
 }
