@@ -1,8 +1,10 @@
 package com.netcracker.veromeev.archinc.command;
 
 import com.netcracker.veromeev.archinc.entity.User;
+import com.netcracker.veromeev.archinc.enumeration.UserType;
 import com.netcracker.veromeev.archinc.jspname.JSPName;
 import com.netcracker.veromeev.archinc.service.AdminService;
+import com.netcracker.veromeev.archinc.service.RegisterService;
 import com.netcracker.veromeev.archinc.service.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,23 +35,77 @@ public class AdminCommand extends Command {
         } else if ("edituser".equals(action)) {
             returnPage = editUser(request);
         } else if ("deleteuser".equals(action)) {
-            returnPage = deleteUser(request);
+            returnPage = deleteUser(request, user);
+        } else if ("submitcreate".equals(action)) {
+            returnPage = submitCreateUser(request);
+        } else if ("submitedit".equals(action)) {
+            returnPage = submitEditUser(request);
+        } else if ("cancel".equals(action)) {
+            returnPage  = cancel();
         }
         return returnPage;
     }
 
-    private String deleteUser(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
-        try {
-            AdminService.getInstance().deleteUser(id);
-            request.setAttribute("message", "User successfully deleted");
+    private String submitEditUser(HttpServletRequest request) {
+        return JSPName.ADMIN;
+    }
 
-        } catch (ServiceException e) {
-            LOG.error("can't delete user object",e);
-            request.setAttribute("message", "User wasn't deleted");
+    private String submitCreateUser(HttpServletRequest request) {
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+        UserType userType;
+        String parsedUserType = request.getParameter("usertype");
+        try {
+            userType = UserType.valueOf(parsedUserType);
+        } catch (IllegalArgumentException e) {
+            userType = null;
+        }
+        if (login == null || password == null || userType == null) {
+            LOG.error("Wrong arguments for creation: login='" + login +
+                    "', pass='" + password + "', parsed usertype='" +
+                    parsedUserType + '\'');
+            request.setAttribute("message",
+                    "User creation form was corrupted");
+        } else {
+            if (RegisterService.getInstance().usernameExists(login)) {
+                request.setAttribute("message",
+                        "Such username already exists");
+            } else {
+                try {
+                    RegisterService.getInstance().signUp(
+                            login, password, userType);
+                } catch (ServiceException e) {
+                    LOG.error("Error at creation user in db", e);
+                    request.setAttribute("message",
+                            "User creation filed because of internal error");
+                }
+            }
         }
         return JSPName.ADMIN;
     }
+
+    private String cancel() {
+        return JSPName.ADMIN;
+    }
+
+    private String deleteUser(HttpServletRequest request, User currentUser) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        if (currentUser.getId() == id) {
+            request.setAttribute("message", "You may not delete yourself");
+        } else{
+            try {
+                AdminService.getInstance().deleteUser(id);
+                request.setAttribute("message", "User successfully deleted");
+
+            } catch (ServiceException e) {
+                LOG.error("can't delete user object",e);
+                request.setAttribute("message", "User wasn't deleted");
+            }
+        }
+        return JSPName.ADMIN;
+    }
+
+
 
     private String editUser(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));

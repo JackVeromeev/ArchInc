@@ -54,7 +54,6 @@ public class AdminService extends AbstractService {
     }
 
     public void deleteUser(int id) throws ServiceException {
-        logger.info("deleteUser(id=" + id + ")");
         runAtomicTransaction("deleteUser(" + id + ")",
                 connection -> UserDAO.getInstance().deleteById(id, connection)
         );
