@@ -1,13 +1,11 @@
 package com.netcracker.veromeev.archinc.enumeration;
 
-import com.sun.istack.internal.Nullable;
-
 public enum UserType {
     ADMIN,
     CUSTOMER,
     MANAGER,
     HUMAN_RESOURCE,
-    NOT_AUTHORIZED;
+    NA;
 
     private int id;
 
@@ -19,7 +17,6 @@ public enum UserType {
         this.id = id;
     }
 
-    @Nullable
     public static UserType getById(int id) {
         if (id == ADMIN.getId()) {
             return ADMIN;
@@ -33,6 +30,6 @@ public enum UserType {
         if (id == HUMAN_RESOURCE.getId()) {
             return HUMAN_RESOURCE;
         }
-        return NOT_AUTHORIZED;
+        return NA;
     }
 }

@@ -32,7 +32,6 @@ public class EnumerationInitializer {
             throw new SQLException(
                     "Can't initialize id-s in UserType enumeration", ex);
         }
-        UserType.NOT_AUTHORIZED.setId(0);
     }
 
     private static void initializeEducation(Connection connection)

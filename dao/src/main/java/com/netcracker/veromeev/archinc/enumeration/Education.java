@@ -1,7 +1,5 @@
 package com.netcracker.veromeev.archinc.enumeration;
 
-import com.sun.istack.internal.Nullable;
-
 /**
  * Created by jack on 19/04/17.
  *
@@ -24,7 +22,6 @@ public enum Education {
         this.id = id;
     }
 
-    @Nullable
     public static Education getById(int id) {
         if (id == BASIC.getId()) {
             return BASIC;
@@ -46,30 +43,18 @@ public enum Education {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Education{");
-        String edu;
         switch (this) {
             case BASIC:
-                edu = "Basic";
-                break;
+                return "Basic";
             case AVERAGE:
-                edu = "Average";
-                break;
+                return "Average";
             case SPECIAL_AVERAGE:
-                edu = "Special average";
-                break;
+                return "Special average";
             case PROFESSIONAL_TECH:
-                edu = "Professional technique";
-                break;
+                return "Professional technical";
             case HIGH:
-                edu = "High";
-                break;
-            default:
-                edu = "N/A";
+                return "High";
         }
-        sb.append(edu);
-        sb.append(", id=").append(id);
-        sb.append('}');
-        return sb.toString();
+        return "N/A";
     }
 }

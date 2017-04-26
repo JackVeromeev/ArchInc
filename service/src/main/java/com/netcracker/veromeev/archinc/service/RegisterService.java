@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class RegisterService extends AbstractService {
 
-    private static final Logger logger =
+    private static final Logger LOG =
             LoggerFactory.getLogger(RegisterService.class);
 
     private static RegisterService instance = null;
@@ -47,9 +47,39 @@ public class RegisterService extends AbstractService {
         runReadingTransaction("signIn(" + login + ", " + password + ")",
                 connection -> {
                     User expectedUser = UserDAO.getInstance().
-                            findByNamePass(login, encryptedPass, connection);
-                    users.add(expectedUser);
+                            findByName(login, connection);
+                    LOG.info("sign in found user " + expectedUser.toString());
+                    if (expectedUser.getPassword().equals(encryptedPass)){
+                        users.add(expectedUser);
+                    }
         });
+        if (users.size() == 0) {
+            throw new ServiceException(
+                    "signIn(" + login + "," + password + ") No such user");
+        }
+        return users.get(0);
+    }
+
+    public User findUserByLoginEncryptedPass(String login,
+                                             String encryptedPass)
+        throws ServiceException {
+        List<User> users = new LinkedList<>();
+        runReadingTransaction("findUserByLoginEncryptedPass("
+                        + login + ", " + encryptedPass + ")",
+                connection -> {
+                    User expectedUser = UserDAO.getInstance().
+                            findByName(login, connection);
+                    LOG.info("findUserByLoginEncryptedPass found user " +
+                            expectedUser.toString());
+                    if (expectedUser.getPassword().equals(encryptedPass)){
+                        users.add(expectedUser);
+                    }
+                });
+        if (users.size() == 0) {
+            throw new ServiceException(
+                    "findUserByLoginEncryptedPass(" + login + ","
+                            + encryptedPass + ") No such user");
+        }
         return users.get(0);
     }
 

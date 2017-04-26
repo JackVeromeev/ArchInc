@@ -20,10 +20,10 @@
     </filter-mapping>
 
 
-    <!-- Listener -->
+    <!-- ApplicationListener -->
     <listener>
         <listener-class>
-            com.netcracker.veromeev.archinc.listener.Listener
+            com.netcracker.veromeev.archinc.listener.ApplicationListener
         </listener-class>
     </listener>
 
@@ -34,11 +34,12 @@
         <servlet-class>
             com.netcracker.veromeev.archinc.controller.Controller
         </servlet-class>
+        <load-on-startup>0</load-on-startup>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>Controller</servlet-name>
-        <url-pattern>/archinc</url-pattern>
+        <url-pattern></url-pattern>
     </servlet-mapping>
 
 

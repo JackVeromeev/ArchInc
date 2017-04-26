@@ -1,3 +1,18 @@
+body {
+    background-color: #ADD8E6;
+}
+
+.button-add {
+    margin: 10px;
+}
+.button-edit {
+    margin-right: 20px;
+    margin-top: 10px;
+}
+.button-delete{
+    margin-top:10px;
+}
+
 
 .Button-n {
     position: relative;
@@ -13,6 +28,7 @@
     cursor: pointer;
 
 }
+
 .fda{
     position: relative;
     left: 20px;
@@ -66,13 +82,26 @@ html { overflow-x: hidden; }
 
 h1{
     text-align: center;
-
 }
 
 #slogan {
     font-style: italic;
     margin-top: 60px;
 }
+
+#title {
+    font-size: 60px;
+}
+
+#error-msg{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    margin: 30px;
+    font-size: 25px;
+    color: red;
+    text-align: center;
+    padding-top: 0px;
+}
+
 button {
     outline: none!important;
 }

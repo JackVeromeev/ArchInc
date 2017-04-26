@@ -1,7 +1,10 @@
 package com.netcracker.veromeev.archinc.filter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.servlet.*;
-import java.io.IOException;
+
 
 /**
  * Created by jack on 24/04/17.
@@ -10,19 +13,28 @@ import java.io.IOException;
  */
 public class Filter implements javax.servlet.Filter {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Filter.class);
+
     public void destroy() {
     }
 
-    public void doFilter(ServletRequest req,
-                         ServletResponse resp,
-                         FilterChain chain)
-            throws ServletException, IOException {
+    public void doFilter(ServletRequest servletRequest,
+                         ServletResponse servletResponse,
+                         FilterChain filterChain)
+            throws ServletException {
 
-        chain.doFilter(req, resp);
+        try {
+            servletRequest.setCharacterEncoding("UTF-8");
+            servletResponse.setContentType("text/html; charset=UTF-8");
+            servletResponse.setCharacterEncoding("UTF-8");
+            filterChain.doFilter(servletRequest, servletResponse);
+        } catch (Exception ex) {
+            LOGGER.error("Error in Filter", ex);
+        }
+
     }
 
-    public void init(FilterConfig config) throws ServletException {
-
-    }
+    @Override
+    public void init(FilterConfig config) {}
 
 }

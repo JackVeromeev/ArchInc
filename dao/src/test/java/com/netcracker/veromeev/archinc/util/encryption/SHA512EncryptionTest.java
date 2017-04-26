@@ -6,10 +6,6 @@ public class SHA512EncryptionTest {
     @Test
     public void encrypt() throws Exception {
         System.out.println(
-                SHA512Encryption.encrypt("1234"));
-        System.out.println(
-                SHA512Encryption.encrypt("1234"));
-        System.out.println(
-                SHA512Encryption.encrypt("5678").length());
+                SHA512Encryption.encrypt("admin"));
     }
 }

@@ -43,6 +43,13 @@ public class User extends Entity {
         return userType;
     }
 
+    public void setUser(User user) {
+        this.setId(user.getId());
+        this.login = user.getLogin();
+        this.password = user.getPassword();
+        this.userType = user.getUserType();
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("User{");

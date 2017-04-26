@@ -18,7 +18,7 @@ public class UserDAO extends AbstractDAO<User> {
             "Can't update User with id = ";
 
     private static final String INSERT_QUERY =
-            "INSERT INTO User SET Login = ?, Password = ?, id_Usertype = ?;";
+            "INSERT INTO User (Login, Password, id_Usertype) values (?,?,?);";
     private static final String INSERT_EXCEPTION_MESSAGE =
             "Can't insert User with Login = ";
 
@@ -28,10 +28,10 @@ public class UserDAO extends AbstractDAO<User> {
     private static final String SELECT_BY_ID_EXCEPTION_MESSAGE =
             "Can't find User with id = ";
 
-    private static final String SELECT_BY_LOGIN_PASS_QUERY =
+    private static final String SELECT_BY_LOGIN_QUERY =
             "SELECT id_User, id_Usertype, Login, Password FROM User " +
-                    "WHERE Login=?, Password=?;";
-    private static final String SELECT_BY_LOGIN_PASS_EXCEPTION_MESSAGE =
+                    "WHERE Login=?;";
+    private static final String SELECT_BY_LOGIN_EXCEPTION_MESSAGE =
             "Can't find User by Login and Password";
 
     private static final String SELECT_ALL_USERS_QUERY =
@@ -70,19 +70,16 @@ public class UserDAO extends AbstractDAO<User> {
         }
     }
 
-    public User findByNamePass(String login, String password,
-                               Connection connection)
+    public User findByName(String login, Connection connection)
             throws DAOException {
         List<User> resultList = new LinkedList<>();
-        executeReadQuery(connection, SELECT_BY_LOGIN_PASS_QUERY,
-                SELECT_BY_LOGIN_PASS_EXCEPTION_MESSAGE,
+        executeReadQuery(connection, SELECT_BY_LOGIN_QUERY,
+                SELECT_BY_LOGIN_EXCEPTION_MESSAGE,
                 resultList, User.class,
-                statement -> {
-                    statement.setString(1, login);
-                    statement.setString(2, password);
-        });
+                statement -> statement.setString(1, login)
+        );
         if (resultList.size() == 0) {
-            throw new DAOException(SELECT_BY_LOGIN_PASS_EXCEPTION_MESSAGE);
+            throw new DAOException(SELECT_BY_LOGIN_EXCEPTION_MESSAGE);
         } else {
             return resultList.get(0);
         }

@@ -255,8 +255,19 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- INSERTION REGION
 -- ---------------------
 
-INSERT INTO Usertype (Type) VALUES
-  ('ADMIN'),
-  ('CUSTOMER'),
-  ('MANAGER'),
-  ('HUMAN_RESOURCE');
+INSERT INTO Usertype (id_Usertype, Type) VALUES
+  (1, 'ADMIN'),
+  (2, 'CUSTOMER'),
+  (3, 'MANAGER'),
+  (4, 'HUMAN_RESOURCE');
+
+  -- login: admin, pass: admin, type: ADMIN
+INSERT INTO User (id_Usertype, Login, Password) VALUE
+  (1, 'admin', 'c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd472634dfac71cd34ebc35d16ab7fb8a90c81f975113d6c7538dc69dd8de9077ec');
+
+INSERT INTO Education (Education) VALUES
+  ('BASIC'),
+  ('AVERAGE'),
+  ('SPECIAL_AVERAGE'),
+  ('PROFESSIONAL_TECH'),
+  ('HIGH');

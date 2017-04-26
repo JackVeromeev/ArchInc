@@ -1,7 +1,7 @@
-package com.netcracker.veromeev.archinc.assistant;
+package com.netcracker.veromeev.archinc.assistant.cookie;
 
+import com.netcracker.veromeev.archinc.command.CommandException;
 import com.netcracker.veromeev.archinc.entity.User;
-import com.netcracker.veromeev.archinc.enumeration.UserType;
 import com.netcracker.veromeev.archinc.service.RegisterService;
 import com.netcracker.veromeev.archinc.service.ServiceException;
 import org.slf4j.LoggerFactory;
@@ -18,15 +18,15 @@ import java.util.Properties;
  *
  * @author Jack Veromeyev
  */
-public class RoleCheckAssistant {
+public class CookieHandler {
 
-    private static RoleCheckAssistant instance = null;
+    private static CookieHandler instance = null;
 
     private static final String USER_COOKIE_NAME = "archinc_username";
     private static final String USER_COOKIE_PASSWORD = "archinc_password";
     private static int cookieAge = 3600;
 
-    private RoleCheckAssistant() {
+    private CookieHandler() {
 
         Properties cookieProperty = new Properties();
 
@@ -39,21 +39,28 @@ public class RoleCheckAssistant {
                     cookieProperty.getProperty("sessionMaxTimeMin")) * 60;
 
         } catch (IOException e) {
-            LoggerFactory.getLogger(RoleCheckAssistant.class).error(
+            LoggerFactory.getLogger(CookieHandler.class).error(
                     "File cookie.properties is not found. " +
                             "Cookie age is set to default (1 hour)", e);
         }
     }
 
-    public static synchronized RoleCheckAssistant getInstance() {
+    public static synchronized CookieHandler getInstance() {
         if (instance == null) {
-            instance = new RoleCheckAssistant();
+            instance = new CookieHandler();
         }
         return instance;
     }
 
+    /**
+     * parses cookies from request and returns User objects, if cookies contain
+     * information about him
+     * @param request HTTPRequest
+     * @return user object if cookie contain it
+     * @throws ServiceException if user was not found
+     */
     public User parseUserFromCookie(HttpServletRequest request)
-            throws ServiceException {
+            throws CookieException {
         Cookie[] cookies = request.getCookies();
         String username = null;
         String password = null;
@@ -68,9 +75,14 @@ public class RoleCheckAssistant {
             }
         }
         if (username == null || password == null) {
-            return new User(0, UserType.NOT_AUTHORIZED, "", "");
+            throw new CookieException("user not found in cookie");
         }
-        return RegisterService.getInstance().signIn(username, password);
+        try{
+            return RegisterService.getInstance().findUserByLoginEncryptedPass(
+                    username, password);
+        } catch (ServiceException e) {
+            throw new CookieException("user not found in DB", e);
+        }
     }
 
     public void addUserToCookie(User user, HttpServletResponse response) {

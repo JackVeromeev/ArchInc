@@ -15,7 +15,7 @@ import java.sql.SQLException;
  *
  * @author Jack Veromeyev
  */
-public class AbstractService implements TransactionHandler {
+public abstract class AbstractService implements TransactionHandler {
 
     @Override
     public void runAtomicTransaction(String methodName,
