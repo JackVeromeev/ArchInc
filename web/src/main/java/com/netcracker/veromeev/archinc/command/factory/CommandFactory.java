@@ -2,6 +2,7 @@ package com.netcracker.veromeev.archinc.command.factory;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.netcracker.veromeev.archinc.command.AdminCommand;
 import com.netcracker.veromeev.archinc.command.Command;
 import com.netcracker.veromeev.archinc.command.EmptyCommand;
 import com.netcracker.veromeev.archinc.command.LoginCommand;
@@ -33,6 +34,8 @@ public class CommandFactory {
         switch (commandName) {
             case CommandName.LOGIN:
                 return LoginCommand.getInstance();
+            case CommandName.ADMIN:
+                return AdminCommand.getInstance();
             default:
                 return EmptyCommand.getInstance();
         }

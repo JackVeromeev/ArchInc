@@ -43,4 +43,20 @@ public class AdminService extends AbstractService {
                 connection -> UserDAO.getInstance().update(user, connection)
         );
     }
+
+    public User getUserById(int id) throws ServiceException {
+        User user = new User(0, UserType.NA, "", "");
+        runReadingTransaction("getUserById(" + id + ")",
+                connection -> user.setUser(UserDAO.getInstance().findById(
+                        id, connection))
+        );
+        return user;
+    }
+
+    public void deleteUser(int id) throws ServiceException {
+        logger.info("deleteUser(id=" + id + ")");
+        runAtomicTransaction("deleteUser(" + id + ")",
+                connection -> UserDAO.getInstance().deleteById(id, connection)
+        );
+    }
 }

@@ -32,31 +32,42 @@
     </div>
 </div>
 
-
-<div class="col-md-12">
-    <table border="1" width="100%" cellpadding="5">
-        <tr>
-            <th>Login</th>
-            <th>Type</th>
-            <th>Action</th>
-        </tr>
-
-        <c:forEach var="user" items="${requestScope.users}">
+<div class="row">
+    <div class="col-md-12">
+        <table border="1" width="100%" cellpadding="5">
             <tr>
-                <td>${user.login}</td>
-                <td>${user.userType}</td>
-                <td>
-                    <form action="./" method="post">
-                        <input type="hidden" name="id" value="${user.id}">
-                        <input type="hidden" name="command" value="admin">
-                        <button class="button-edit" type="submit" name="action" value="edituser">Edit</button>
-                        <button class="button-delete" type="submit" name="action" value="deleteuser">Delete</button>
-                        </form>
-                </td>
+                <th>Login</th>
+                <th>Type</th>
+                <th>Action</th>
             </tr>
-        </c:forEach>
-    </table>
+
+            <c:forEach var="user" items="${requestScope.users}">
+                <tr>
+                    <td>${user.login}</td>
+                    <td>${user.userType}</td>
+                    <td>
+                        <form action="./" method="post">
+                            <input type="hidden" name="id" value="${user.id}">
+                            <input type="hidden" name="command" value="admin">
+                            <button class="button-edit" type="submit" name="action" value="edituser">Edit</button>
+                            <button class="button-delete" type="submit" name="action" value="deleteuser">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+    </div>
 </div>
+
+<c:set var="msg" value="${requestScope.message}"/>
+<c:if test="${not empty msg}">
+    <div class="row">
+        <div class="col-md-5">
+            <p id="error-msg">${msg}</p>
+        </div>
+    </div>
+</c:if>
+
 
 </body>
 </html>

@@ -13,6 +13,8 @@ public class JSPName {
     public static final String CUSTOMER = "customer.jsp";
 
     public static final String ADMIN = "admin.jsp";
+    public static final String ADD_USER = "add_user.jsp";
+    public static final String EDIT_USER = "edit_user.jsp";
 
     public static final String MANAGER = "manager.jsp";
 }
