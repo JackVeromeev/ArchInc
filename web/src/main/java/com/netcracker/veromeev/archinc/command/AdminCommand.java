@@ -47,6 +47,45 @@ public class AdminCommand extends Command {
     }
 
     private String submitEditUser(HttpServletRequest request) {
+
+        String parsedId = request.getParameter("id");
+        int id;
+        try {
+            id = Integer.parseInt(parsedId);
+        } catch (NumberFormatException e) {
+            id = 0;
+        }
+        String login = request.getParameter("login");
+        String newPassword = request.getParameter("password");
+        String parsedUserType = request.getParameter("usertype");
+        UserType userType;
+        try {
+            userType = UserType.valueOf(parsedUserType);
+        } catch (IllegalArgumentException e) {
+            userType = null;
+        }
+
+        if (login == null || id == 0) {
+            String message = "Illegal params: id=" + id + ", login=" + login;
+            LOG.error(message);
+            request.setAttribute("message", message);
+        } else if (RegisterService.getInstance().usernameExists(login)) {
+            String message = "Such login (" + login + ") already exists";
+            LOG.info(message);
+            request.setAttribute("message", message);
+        } else {
+            try {
+                User oldUser = AdminService.getInstance().getUserById(id);
+                String password = (newPassword == null)
+                        ? oldUser.getPassword()
+                        : newPassword;
+                User user = new User(id, userType, login, password);
+                RegisterService.getInstance().updateUser(user);
+            } catch (ServiceException e) {
+                LOG.error("Internal error (see trace)", e);
+                request.setAttribute("message", "Internal error occured");
+            }
+        }
         return JSPName.ADMIN;
     }
 
@@ -74,6 +113,8 @@ public class AdminCommand extends Command {
                 try {
                     RegisterService.getInstance().signUp(
                             login, password, userType);
+                    request.setAttribute("message",
+                            "User created successfully");
                 } catch (ServiceException e) {
                     LOG.error("Error at creation user in db", e);
                     request.setAttribute("message",

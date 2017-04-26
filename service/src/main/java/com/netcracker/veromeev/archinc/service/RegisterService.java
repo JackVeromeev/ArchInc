@@ -32,8 +32,8 @@ public class RegisterService extends AbstractService {
     }
 
     /**
-     * Checks for existing of such User in database and returns User object of
-     * that user
+     * Checks for existing of such User in database by login and password
+     * and returns User object of that user
      * @param login user name
      * @param password user password
      * @return User object of this user
@@ -97,7 +97,7 @@ public class RegisterService extends AbstractService {
             throws ServiceException {
         String encryptedPass = SHA512Encryption.encrypt(password);
         User newUser = new User(0, userType, login, encryptedPass);
-        runAtomicTransaction("at signUp(" + login + ", " + password + ")",
+        runAtomicTransaction("signUp(" + login + ", " + password + ")",
                 connection -> UserDAO.getInstance().insert(newUser, connection)
         );
         return signIn(newUser.getLogin(), newUser.getPassword());
@@ -114,4 +114,9 @@ public class RegisterService extends AbstractService {
         return true;
     }
 
+    public void updateUser(User user) throws ServiceException {
+        runAtomicTransaction("update user (id=" + user.getId() + ")",
+                connection -> UserDAO.getInstance().update(user, connection)
+        );
+    }
 }

@@ -44,7 +44,7 @@
             <c:forEach var="user" items="${requestScope.users}">
                 <tr>
                     <td>${user.login}</td>
-                    <td>${user.userType}</td>
+                    <td>${user.userType == 'HUMAN_RESOURCE' ? 'HR' : user.userType}</td>
                     <td>
                         <form action="./" method="post">
                             <input type="hidden" name="id" value="${user.id}">
