@@ -64,18 +64,21 @@ public class AdminCommand extends Command {
         } catch (IllegalArgumentException e) {
             userType = null;
         }
-
-        if (login == null || id == 0) {
+        User oldUser = null;
+        try {
+            oldUser = AdminService.getInstance().getUserById(id);
+        } catch (ServiceException e) {}
+        if (login == null || id == 0 || oldUser == null) {
             String message = "Illegal params: id=" + id + ", login=" + login;
             LOG.error(message);
             request.setAttribute("message", message);
-        } else if (RegisterService.getInstance().usernameExists(login)) {
+        } else if (RegisterService.getInstance().usernameExists(login)
+                && !oldUser.getLogin().equals(login)) {
             String message = "Such login (" + login + ") already exists";
             LOG.info(message);
             request.setAttribute("message", message);
         } else {
             try {
-                User oldUser = AdminService.getInstance().getUserById(id);
                 String password = (newPassword == null)
                         ? oldUser.getPassword()
                         : newPassword;

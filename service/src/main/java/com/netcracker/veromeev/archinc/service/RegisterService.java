@@ -105,7 +105,8 @@ public class RegisterService extends AbstractService {
 
     public boolean usernameExists(String login) {
         try {
-            runReadingTransaction("check if username " + login + "already exists",
+            runReadingTransaction("check if username "
+                            + login + "already exists",
                     connection -> UserDAO.getInstance().findByName(login, connection)
             );
         } catch (ServiceException e) {
