@@ -6,7 +6,6 @@ import com.netcracker.veromeev.archinc.command.Command;
 import com.netcracker.veromeev.archinc.command.factory.CommandFactory;
 import com.netcracker.veromeev.archinc.entity.User;
 import com.netcracker.veromeev.archinc.enumeration.UserType;
-import com.netcracker.veromeev.archinc.service.ServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +46,7 @@ public class Controller extends HttpServlet {
 
         Command command = CommandFactory.getInstance().parseCommand(request);
 
-        User user = null;
+        User user;
         try {
             user = CookieHandler.getInstance().parseUserFromCookie(request);
         } catch (CookieException e) {

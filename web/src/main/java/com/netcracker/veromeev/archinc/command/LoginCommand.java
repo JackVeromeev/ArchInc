@@ -76,7 +76,7 @@ public class LoginCommand extends Command {
                     RegisterService.getInstance().signIn(login, password);
             user.setUser(registeredUser);
         } catch (ServiceException e) {
-            LOG.info("catched exception at sign in");
+            LOG.info("caught exception at sign in");
             throw new CommandException("Wrong login or password", e);
         }
         return getPageForUser(user);
@@ -92,7 +92,7 @@ public class LoginCommand extends Command {
             user.setUser(newUser);
         } catch (ServiceException e) {
             // maybe user is added, but the exception is thrown (idk why)
-            LOG.info("catched exception at sign up");
+            LOG.info("caught exception at sign up");
             try {
                 processSignIn(login, password, user);
             } catch (CommandException e1) {

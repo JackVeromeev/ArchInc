@@ -1,6 +1,5 @@
 package com.netcracker.veromeev.archinc.assistant.cookie;
 
-import com.netcracker.veromeev.archinc.command.CommandException;
 import com.netcracker.veromeev.archinc.entity.User;
 import com.netcracker.veromeev.archinc.service.RegisterService;
 import com.netcracker.veromeev.archinc.service.ServiceException;
@@ -57,7 +56,7 @@ public class CookieHandler {
      * information about him
      * @param request HTTPRequest
      * @return user object if cookie contain it
-     * @throws ServiceException if user was not found
+     * @throws CookieException if user was not found
      */
     public User parseUserFromCookie(HttpServletRequest request)
             throws CookieException {

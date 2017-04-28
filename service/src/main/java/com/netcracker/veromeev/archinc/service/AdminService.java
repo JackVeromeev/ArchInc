@@ -33,7 +33,7 @@ public class AdminService extends AbstractService {
         List<User> users = new LinkedList<>();
         runReadingTransaction("getUsers()", connection -> {
             List<User> userList = UserDAO.getInstance().readAll(connection);
-            userList.forEach(user -> users.add(user));
+            userList.forEach(users::add);
         });
         return users;
     }

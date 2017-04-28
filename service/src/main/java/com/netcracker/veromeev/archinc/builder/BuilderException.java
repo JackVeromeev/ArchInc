@@ -19,7 +19,7 @@ public class BuilderException extends TransactionException {
 
     @Override
     public String toString() {
-        return "Builder exception: '" + getMessage() + "' causerd by " +
+        return "Builder exception: '" + getMessage() + "' caused by " +
                 getCause();
     }
 }

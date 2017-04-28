@@ -1,7 +1,6 @@
 package com.netcracker.veromeev.archinc.dao;
 
 import com.netcracker.veromeev.archinc.entity.User;
-import com.netcracker.veromeev.archinc.util.encryption.SHA512Encryption;
 
 import java.sql.Connection;
 import java.util.LinkedList;

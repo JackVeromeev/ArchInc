@@ -54,7 +54,7 @@ public abstract class Command {
                     break;
             }
         } catch (ServiceException e) {
-            LOG.warn("exception in init page ", e);
+            LOG.error("exception in init page ", e);
         }
     }
 

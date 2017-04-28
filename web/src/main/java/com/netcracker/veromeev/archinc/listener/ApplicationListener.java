@@ -1,8 +1,4 @@
-package com.netcracker.veromeev.archinc.listener; /**
- * Created by jack on 24/04/17.
- *
- * @author Jack Veromeyev
- */
+package com.netcracker.veromeev.archinc.listener;
 
 import com.netcracker.veromeev.archinc.dbmanager.DBManager;
 import com.netcracker.veromeev.archinc.dbmanager.DBManagerException;
@@ -13,10 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.http.HttpSessionAttributeListener;
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
-import javax.servlet.http.HttpSessionBindingEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -32,7 +24,7 @@ public class ApplicationListener implements ServletContextListener{
     // ServletContextListener implementation
     // -------------------------------------------------------
     public void contextInitialized(ServletContextEvent sce) {
-        Connection connection = null;
+        Connection connection;
         try {
             connection = DBManager.getInstance().getConnection();
             EnumerationInitializer.initialize(connection);

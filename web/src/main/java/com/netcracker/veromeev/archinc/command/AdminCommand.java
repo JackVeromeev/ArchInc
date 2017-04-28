@@ -86,7 +86,7 @@ public class AdminCommand extends Command {
                 RegisterService.getInstance().updateUser(user);
             } catch (ServiceException e) {
                 LOG.error("Internal error (see trace)", e);
-                request.setAttribute("message", "Internal error occured");
+                request.setAttribute("message", "Internal error occurred");
             }
         }
         return JSPName.ADMIN;

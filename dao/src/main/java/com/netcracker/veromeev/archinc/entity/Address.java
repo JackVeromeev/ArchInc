@@ -77,6 +77,15 @@ public class Address extends Entity {
                 Objects.equals(Street, address.Street);
     }
 
+    public boolean equalsBesideId(Address address) {
+        return this == address
+                || townId == address.townId
+                && countryId == address.countryId
+                && regionId == address.regionId
+                && house == address.house
+                && Objects.equals(Street, address.Street);
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), townId, countryId, regionId, Street, house);

@@ -5,6 +5,8 @@ import com.netcracker.veromeev.archinc.transaction.Transaction;
 import com.netcracker.veromeev.archinc.transaction.TransactionException;
 
 /**
+ * Builders are classes to work with complex entities (orders, employees)
+ *
  * Created by jack on 27/04/17.
  *
  * @author Jack Veromeyev
@@ -32,5 +34,7 @@ abstract class AbstractBuilder extends AbstractTransactionHandler {
             throw new BuilderException(e.getMessage(), e.getCause());
         }
     }
+
+    public abstract void applyChangesToDB() throws BuilderException;
 
 }
