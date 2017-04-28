@@ -35,6 +35,6 @@ abstract class AbstractBuilder extends AbstractTransactionHandler {
         }
     }
 
-    public abstract void applyChangesToDB() throws BuilderException;
+    public abstract void synchronizeWithDB() throws BuilderException;
 
 }

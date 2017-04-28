@@ -25,6 +25,11 @@ public class QualificationDAO extends AbstractDAO<Qualification> {
     private static final String SELECT_BY_ID_EXCEPTION_MESSAGE =
             "Can't read a qualification by id = ";
 
+    private static final String SELECT_BY_NAME_QUERY =
+            SELECT_ALL_QUERY + " WHERE Qualification=?";
+    private static final String SELECT_BY_NAME_EXCEPTION_MESSAGE =
+            "Can't read a qualification by name = ";
+
     private static final String INSERT_QUERY =
             "INSERT INTO Qualification " +
                     "SET Qualification=?";
@@ -67,6 +72,19 @@ public class QualificationDAO extends AbstractDAO<Qualification> {
         } else {
             return qualifications.get(0);
         }
+    }
+
+    public Qualification findByName(String name, Connection connection)
+            throws DAOException {
+        List<Qualification> qualifications = new LinkedList<>();
+        executeReadQuery(connection, SELECT_BY_NAME_QUERY,
+                SELECT_BY_NAME_EXCEPTION_MESSAGE + name,
+                qualifications, Qualification.class,
+                statement -> statement.setString(1, name));
+        if (qualifications.size() == 0) {
+            throw new DAOException(SELECT_BY_ID_EXCEPTION_MESSAGE + name);
+        }
+        return qualifications.get(0);
     }
 
     @Override

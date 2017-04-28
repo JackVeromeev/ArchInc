@@ -32,8 +32,8 @@ public class AddressBuilder extends AbstractBuilder {
 
     /**
      * constructor for id of Address entity in DB
-     * @param id id of Address in DB
-     * @throws BuilderException if address with this id doesn/t exist
+     * @param id id of Address in DB, 0 - new Address
+     * @throws BuilderException if address with this id doesn't exist
      */
     public AddressBuilder(int id) throws BuilderException {
         if (id == 0) {
@@ -51,6 +51,10 @@ public class AddressBuilder extends AbstractBuilder {
             }
             this.address = addresses.get(0);
         }
+    }
+
+    public int getId() {
+        return this.address.getId();
     }
 
     public AddressBuilder country() throws BuilderException {
@@ -158,7 +162,7 @@ public class AddressBuilder extends AbstractBuilder {
     }
 
     @Override
-    public void applyChangesToDB() throws BuilderException {
+    public void synchronizeWithDB() throws BuilderException {
         checkoutCountry();
         checkoutRegion();
         checkoutTown();
