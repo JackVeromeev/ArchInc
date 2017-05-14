@@ -1,11 +1,11 @@
-package com.netcracker.veromeev.archinc.command;
+package by.bsuir.rudko.archinc.command;
 
-import com.netcracker.veromeev.archinc.assistant.cookie.CookieHandler;
-import com.netcracker.veromeev.archinc.entity.User;
-import com.netcracker.veromeev.archinc.enumeration.UserType;
-import com.netcracker.veromeev.archinc.jspname.JSPName;
-import com.netcracker.veromeev.archinc.service.RegisterService;
-import com.netcracker.veromeev.archinc.service.ServiceException;
+import by.bsuir.rudko.archinc.assistant.cookie.CookieHandler;
+import by.bsuir.rudko.archinc.entity.User;
+import by.bsuir.rudko.archinc.jspname.JSPName;
+import by.bsuir.rudko.archinc.service.RegisterService;
+import by.bsuir.rudko.archinc.service.ServiceException;
+import by.bsuir.rudko.archinc.enumeration.UserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
